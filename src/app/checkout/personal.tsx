@@ -156,17 +156,3 @@ export default function PersonalDetailsForm() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "white",
-    flex: 1,
-  },
-  keyboardView: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  scrollContent: {
-    padding: 20,
-    gap: 10,
-  },
-});
