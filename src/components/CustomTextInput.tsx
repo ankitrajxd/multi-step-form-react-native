@@ -29,7 +29,11 @@ export default function CustomTextInput({
       {label && <Text style={style.label}>{label}</Text>}
       <TextInput
         {...props}
-        style={[style.input, error ? style.errorInput : {}, props.style]} // props.style will take precendence
+        style={[
+          style.input,
+          errors?.message ? style.errorInput : {},
+          props.style,
+        ]} // props.style will take precendence
       />
       <Text numberOfLines={1} style={style.error}>
         {errors?.message}
