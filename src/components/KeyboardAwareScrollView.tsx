@@ -1,6 +1,5 @@
 import {
   View,
-  Text,
   KeyboardAvoidingView,
   ScrollView,
   Platform,
@@ -15,7 +14,7 @@ export default function KeyboardAwareScrollView({
   return (
     <SafeAreaView style={styles.container} edges={["bottom"]}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
         style={styles.keyboardView}
         keyboardVerticalOffset={110}
       >
@@ -24,7 +23,7 @@ export default function KeyboardAwareScrollView({
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled"
         >
-          {children}
+          <View style={styles.contentContainer}>{children}</View>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -33,21 +32,18 @@ export default function KeyboardAwareScrollView({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
     flex: 1,
+    backgroundColor: "white",
   },
   keyboardView: {
     flex: 1,
-    backgroundColor: "white",
   },
   scrollContent: {
-    padding: 20,
-    gap: 10,
     flexGrow: 1,
   },
   contentContainer: {
-    flex: 1,
-    gap: 10,
+    padding: 20,
+    flexGrow: 1,
     justifyContent: "space-between",
   },
 });

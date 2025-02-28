@@ -9,9 +9,9 @@ This project provides a user-friendly multi-step form that guides users through 
 ## Screenshots
 
 <div style="display: flex; flex-direction: row; justify-content: space-between; flex-wrap: wrap;">
-  <img src="./assets/personal.png" width="30%" alt="Personal Info Form" />
-  <img src="./assets/payment.png" width="30%" alt="Payment Info Form" />
-  <img src="./assets/confirm.png" width="30%" alt="Confirmation Screen" />
+  <img src="./assets/personal.png" width="33%" alt="Personal Info Form" />
+  <img src="./assets/payment.png" width="33%" alt="Payment Info Form" />
+  <img src="./assets/confirm.png" width="33%" alt="Confirmation Screen" />
 </div>
 
 ## Features

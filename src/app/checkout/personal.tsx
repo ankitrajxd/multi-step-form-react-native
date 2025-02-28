@@ -21,7 +21,8 @@ const formDataSchema = z.object({
 export type PersonalFormData = z.infer<typeof formDataSchema>;
 
 export default function PersonalDetailsForm() {
-  const { setPersonalInfo, setCurrentStep, currentStep } = useFormStore();
+  const { setPersonalInfo, setCurrentStep, currentStep, personalInfo } =
+    useFormStore();
 
   const {
     control,
@@ -29,11 +30,11 @@ export default function PersonalDetailsForm() {
     formState: { errors },
   } = useForm<PersonalFormData>({
     defaultValues: {
+      address: "street 0",
+      city: "nyc",
       fullName: "John",
-      address: "Street 0 ",
-      phone: "123456789",
-      city: "NYC",
-      postal: "100000",
+      phone: "3483984938493",
+      postal: "797979",
     },
     resolver: zodResolver(formDataSchema),
   });
@@ -56,7 +57,6 @@ export default function PersonalDetailsForm() {
 
   return (
     <KeyboardAwareScrollView>
-      <FormSteps currentStep={currentStep} />
 
       <Controller
         name="fullName"

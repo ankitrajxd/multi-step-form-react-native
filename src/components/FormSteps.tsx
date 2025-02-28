@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Step } from "../store/formStore";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface Props {
   currentStep: Step;
@@ -10,7 +11,7 @@ const steps = ["Personal", "Payment", "Confirm"];
 
 const FormSteps = ({ currentStep }: Props) => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {steps.map((s) => (
         <Text
           key={s}
@@ -19,7 +20,7 @@ const FormSteps = ({ currentStep }: Props) => {
           {s}
         </Text>
       ))}
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -29,9 +30,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 20,
+    height: 110,
+    alignItems: "center",
     marginHorizontal: 20,
-    marginTop: 40,
   },
   stepText: {
     fontSize: 16,

@@ -11,26 +11,29 @@ import { useFormStore } from "../../store/formStore";
 import FormSteps from "../../components/FormSteps";
 
 const formDataSchema = z.object({
-  cardNumber: z.string().min(1, "Card Number is required"),
-  expires: z.string(),
-  cvv: z.string().min(1, "cvv is required"),
+  cardNumber: z
+    .string()
+    .min(16, "Card number must be at least 16 digits")
+    .max(16, "Wrong card number"),
+  expires: z
+    .string()
+    .min(1, "Expiry date is required")
+    .regex(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/),
+  cvv: z.coerce.number().min(100, "cvv is required").max(999),
 });
 
 export type PaymentFormType = z.infer<typeof formDataSchema>;
 
 export default function PaymentDetailsForm() {
-  const { setpaymentInfo, setCurrentStep, currentStep } = useFormStore();
+  const { setpaymentInfo, setCurrentStep, currentStep, paymentInfo } =
+    useFormStore();
 
   const {
     control,
     formState: { errors },
     handleSubmit,
   } = useForm<PaymentFormType>({
-    defaultValues: {
-      cardNumber: "1234567890",
-      expires: "12/23",
-      cvv: "123",
-    },
+    defaultValues: paymentInfo,
     resolver: zodResolver(formDataSchema),
   });
 
@@ -51,7 +54,6 @@ export default function PaymentDetailsForm() {
 
   return (
     <KeyboardAwareScrollView>
-      <FormSteps currentStep={currentStep} />
       <Controller
         name="cardNumber"
         control={control}
@@ -73,7 +75,7 @@ export default function PaymentDetailsForm() {
           gap: 6,
         }}
       >
-        <View style={{ flex: 1 }}>
+        <View style={{ width: "50%" }}>
           <Controller
             name="expires"
             control={control}
@@ -89,20 +91,23 @@ export default function PaymentDetailsForm() {
             )}
           />
         </View>
-        <Controller
-          name="cvv"
-          control={control}
-          render={({ field: { onChange, value, onBlur } }) => (
-            <CustomTextInput
-              id="CVV"
-              label="CVV"
-              onChangeText={onChange}
-              value={value}
-              errors={errors.cvv}
-              placeholder="345"
-            />
-          )}
-        />
+        <View style={{ width: "50%" }}>
+          <Controller
+            name="cvv"
+            control={control}
+            render={({ field: { onChange, value, onBlur } }) => (
+              <CustomTextInput
+                id="CVV"
+                label="CVV"
+                inputMode="numeric"
+                onChangeText={onChange}
+                value={value ? String(value) : ""}
+                errors={errors.cvv}
+                placeholder="345"
+              />
+            )}
+          />
+        </View>
       </View>
       <CustomButton
         onPress={handleSubmit(onNext)}
@@ -115,5 +120,5 @@ export default function PaymentDetailsForm() {
 
 const { container, button } = StyleSheet.create({
   container: { backgroundColor: "white", padding: 10, flex: 1 },
-  button: { marginTop: "auto", marginBottom: 25 },
+  button: { marginTop: "auto" },
 });

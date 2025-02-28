@@ -17,7 +17,15 @@ type CustomButton = {
 const CustomButton = forwardRef<View, CustomButton>(
   ({ rightIcon, title, style, ...pressableProps }, ref) => {
     return (
-      <Pressable ref={ref} {...pressableProps} style={[styles.button, style]}>
+      <Pressable
+        ref={ref}
+        {...pressableProps}
+        style={({ pressed }) => [
+          styles.button,
+          style,
+          pressed && styles.buttonPressed,
+        ]}
+      >
         <Text style={styles.buttonText}>{title}</Text>
         <View style={styles.rightIconContainer}>{rightIcon}</View>
       </Pressable>
@@ -44,6 +52,9 @@ const styles = StyleSheet.create({
   rightIconContainer: {
     position: "absolute",
     right: 20,
+  },
+  buttonPressed: {
+    backgroundColor: "#003a3e",
   },
 });
 

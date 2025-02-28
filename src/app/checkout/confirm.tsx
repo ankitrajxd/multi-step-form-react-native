@@ -4,6 +4,7 @@ import CustomButton from "../../components/CustomButton";
 import { Link, router, useFocusEffect } from "expo-router";
 import { useFormStore } from "../../store/formStore";
 import FormSteps from "../../components/FormSteps";
+import KeyboardAwareScrollView from "../../components/KeyboardAwareScrollView";
 
 export default function ConfirmForm() {
   const { paymentInfo, personalInfo, setCurrentStep, currentStep } =
@@ -16,8 +17,7 @@ export default function ConfirmForm() {
   );
 
   return (
-    <View style={styles.container}>
-      <FormSteps currentStep={currentStep} />
+    <KeyboardAwareScrollView>
       <View style={{ flex: 1, gap: 10 }}>
         {personalInfo && (
           <View style={styles.dataContainer}>
@@ -52,8 +52,12 @@ export default function ConfirmForm() {
       </View>
 
       {/* Submit Button */}
-      <CustomButton onPress={() => {}} title="Submit" />
-    </View>
+      <CustomButton
+        style={styles.submitButton}
+        onPress={() => {}}
+        title="Submit"
+      />
+    </KeyboardAwareScrollView>
   );
 }
 
@@ -100,10 +104,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#222",
   },
-  button: {
-    marginTop: 20,
-    backgroundColor: "#007B7F",
-    paddingVertical: 12,
-    borderRadius: 8,
+  submitButton: {
+    marginTop: 20, // Specific margin for the button
   },
 });
