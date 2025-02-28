@@ -1,20 +1,22 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { router, useFocusEffect } from "expo-router";
-import React, { useCallback, useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useCallback } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { View } from "react-native";
+import { z } from "zod";
 import CustomButton from "../../components/CustomButton";
 import CustomTextInput from "../../components/CustomTextInput";
 import KeyboardAwareScrollView from "../../components/KeyboardAwareScrollView";
-import { useForm, Controller } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useFormStore } from "../../store/formStore";
-import FormSteps from "../../components/FormSteps";
+import countries from "../../../assets/countries.json";
+import CustomPicker from "../../components/CustomPicker";
 
 const formDataSchema = z.object({
   fullName: z.string().min(1, "Name is required."),
   address: z.string().min(1, "Address is required."),
   city: z.string().min(1, "City is required."),
   postal: z.string().min(1, "Required."),
+  country: z.string().length(2),
   phone: z.string().min(1, "Phone is required."),
 });
 
@@ -35,6 +37,7 @@ export default function PersonalDetailsForm() {
       fullName: "John",
       phone: "3483984938493",
       postal: "797979",
+      country: "IN",
     },
     resolver: zodResolver(formDataSchema),
   });
@@ -57,7 +60,6 @@ export default function PersonalDetailsForm() {
 
   return (
     <KeyboardAwareScrollView>
-
       <Controller
         name="fullName"
         control={control}
@@ -145,6 +147,17 @@ export default function PersonalDetailsForm() {
           />
         </View>
       </View>
+
+      <CustomPicker
+        control={control}
+        error={errors.country}
+        name="country"
+        placeholder={{ label: "Select country" }}
+        items={countries.map((country) => ({
+          label: country.name,
+          value: country.code,
+        }))}
+      />
 
       <Controller
         name="phone"
